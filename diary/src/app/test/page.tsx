@@ -43,19 +43,29 @@ const CalendarApp: React.FC = () => {
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
     return (
-      <div>
-        <div>
-          {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
-            <span key={index}>{day}</span>
-          ))}
-        </div>
-        <div>
-          {blanks.map((_, index) => (
-            <span key={`blank-${index}`} />
-          ))}
-          {days.map((day) => (
-            <span key={day}>{day}</span>
-          ))}
+      <div class="container mx-auto">
+        <div class="max-w-md mx-auto">
+          <div class="calendar">
+            <div class="grid grid-cols-7">
+              {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
+                <div class="text-center" key={index}>
+                  <span>{day}</span>
+                </div>
+              ))}
+            </div>
+            <div class="grid grid-cols-7">
+              {blanks.map((_, index) => (
+                <div key={`blank-${index}`}>
+                  <span></span>
+                </div>
+              ))}
+              {days.map((day) => (
+                <div class="text-center" key={day}>
+                  <span>{day}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );
