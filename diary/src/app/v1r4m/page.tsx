@@ -36,7 +36,7 @@ const CalendarApp: React.FC = () => {
   const handleDayClick = (day: any) => {
     alert(day);
   }
-  
+
 
   const githubIssueList = async () => {
     try {
@@ -47,7 +47,7 @@ const CalendarApp: React.FC = () => {
       console.error('An error occurred in the async function', error);
     }
   };
-  
+
 
   useEffect(() => {
     githubIssueList();
@@ -62,10 +62,10 @@ const CalendarApp: React.FC = () => {
         console.error('An error occurred while fetching issues', error);
       }
     };
-  
+
     fetchIssues();
   }, []);
-  
+
 
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
@@ -77,7 +77,15 @@ const CalendarApp: React.FC = () => {
       const day = i + 1;
       const date = new Date(year, month, day).toISOString().split('T')[0];
       const issue = issues.find(issue => issue.created_at.startsWith(date));
-      return issue ? issue.title : <div style={{width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}></div>;
+      return issue ? issue.title :   <div style={{ 
+        width: '20px', 
+        height: '20px', 
+        borderRadius: '50%', 
+        backgroundColor: 'rgba(0, 0, 0, 0.1)', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center' 
+      }}></div>;
     });
     const emoteDays = Array.from({ length: daysInMonth }, (_, i) => {
       const day = i + 1;
@@ -86,48 +94,48 @@ const CalendarApp: React.FC = () => {
     });
     return (
       <div style={{ maxWidth: '375px', margin: '0 auto', padding: '0 20px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '10px' }}>
-        {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
-          <div style={{ textAlign: 'center', padding: '10px 0' }} key={index}>
-            <span>{day}</span>
-          </div>
-        ))}
+        <div className="grid grid-cols-7 gap-1">
+          {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
+            <div style={{ textAlign: 'center', padding: '5px 0' }} key={index}>
+              <span>{day}</span>
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-7 gap-1 text-center">
+          {blanks.map((_, index) => (
+            <div className="text-center py-1" key={`blank-${index}`}>
+              <span></span>
+            </div>
+          ))}
+          {days.map((day, index) => (
+            <div
+              className="text-center py-1 text-center"
+              key={index}
+              onClick={() => handleDayClick(day)}
+            >
+              <span>{day}</span>
+              <div className="text-xs text-center">{emoteDays[index]}</div>
+            </div>
+          ))}
+        </div>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '10px' }}>
-        {blanks.map((_, index) => (
-          <div style={{ textAlign: 'center', padding: '10px 0' }} key={`blank-${index}`}>
-            <span></span>
-          </div>
-        ))}
-        {days.map((day, index) => (
-          <div 
-            style={{ textAlign: 'center', padding: '10px 0' }} 
-            key={index} 
-            onClick={() => handleDayClick(day)}
-          >
-            <span>{day}</span>
-            <div style={{ fontSize: '10px' }}>{emoteDays[index]}</div>
-          </div>
-        ))}
-      </div>
-    </div>
     );
   };
 
   return (
-<div className="flex flex-col h-screen max-w-xs mx-auto p-5">
-<div className="flex items-center justify-center h-1/5 overflow-auto text-center">은진이의 일기 (로고가 들어갈 곳)</div>
-  <div className="h-3/5 overflow-auto">
-    {renderCalendar()}
-  </div>
-  <div className="h-1/10 grid grid-cols-2 gap-2">
-    <button className="py-2 text-center" onClick={handleSwipeRight}>이전 달</button>
-    <button className="py-2 text-center" onClick={handleSwipeLeft}>다음 달</button>
-  </div>
-  <div className="h-1/10">
-    <p className="text-center">{currentMonth.toLocaleDateString()}</p>
-  </div>
-</div>
+    <div className="flex flex-col h-screen max-w-xs mx-auto p-5">
+      <div className="flex items-center justify-center h-1/5 overflow-auto text-center">은진이의 일기 (로고가 들어갈 곳)</div>
+      <div className="h-3/5 overflow-auto">
+        {renderCalendar()}
+      </div>
+      <div className="h-1/10 grid grid-cols-2 gap-2">
+        <button className="py-2 text-center" onClick={handleSwipeRight}>이전 달</button>
+        <button className="py-2 text-center" onClick={handleSwipeLeft}>다음 달</button>
+      </div>
+      <div className="h-1/10">
+        <p className="text-center">{currentMonth.toLocaleDateString()}</p>
+      </div>
+    </div>
   );
 };
 
