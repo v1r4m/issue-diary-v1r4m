@@ -17,6 +17,14 @@
 }
 
 body {
+  display: 'flex';
+  flexDirection: 'column'; 
+  justifyContent: 'center'; 
+  alignItems: 'center';
+  height: '100vh';
+  maxWidth: '375px';
+  margin: '0 auto';
+  padding: '0 20px'; 
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -26,7 +34,6 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-/* 캘린더 스타일 추가 */
 .calendar {
   border: 1px solid #e2e8f0;
   border-radius: 1rem;
@@ -34,7 +41,9 @@ body {
   margin-top: 2rem;
 }
 
-/* 일자 스타일 추가 */
 .calendar span {
   @apply inline-block w-8 h-8 leading-8 text-center m-1 rounded-full;
+  display: block;
+  text-align: center;
+  padding: 10px 0;
 }
