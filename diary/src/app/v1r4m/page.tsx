@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 
 const CalendarApp: React.FC = () => {
-  const [issues, setIssues] = useState([]);
+  const [issues, setIssues] = useState<any[]>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const handlers = useSwipeable({
