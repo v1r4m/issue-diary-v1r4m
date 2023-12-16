@@ -33,6 +33,9 @@ const CalendarApp: React.FC = () => {
     return new Date(year, month, 1).getDay();
   };
 
+  const handleDayClick = (day: any) => {
+    alert(day);
+  }
   
 
   const githubIssueList = async () => {
@@ -74,7 +77,12 @@ const CalendarApp: React.FC = () => {
       const day = i + 1;
       const date = new Date(year, month, day).toISOString().split('T')[0];
       const issue = issues.find(issue => issue.created_at.startsWith(date));
-      return issue ? issue.title : day;
+      return issue ? issue.title : <div style={{width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}></div>;
+    });
+    const emoteDays = Array.from({ length: daysInMonth }, (_, i) => {
+      const day = i + 1;
+      const date = new Date(year, month, day).toISOString().split('T')[0];
+      return day;
     });
     return (
       <div style={{ maxWidth: '375px', margin: '0 auto', padding: '0 20px' }}>
@@ -91,9 +99,14 @@ const CalendarApp: React.FC = () => {
             <span></span>
           </div>
         ))}
-        {days.map((day) => (
-          <div style={{ textAlign: 'center', padding: '10px 0' }} key={day}>
+        {days.map((day, index) => (
+          <div 
+            style={{ textAlign: 'center', padding: '10px 0' }} 
+            key={index} 
+            onClick={() => handleDayClick(day)}
+          >
             <span>{day}</span>
+            <div style={{ fontSize: '10px' }}>{emoteDays[index]}</div>
           </div>
         ))}
       </div>
