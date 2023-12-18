@@ -12,7 +12,7 @@ const CalendarApp: React.FC = () => {
   const id = usePathname();
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
-  const calendarRef = useRef(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
   const [calendarWidth, setCalendarWidth] = useState(0);
 
 
