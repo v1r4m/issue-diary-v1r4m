@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import moment from 'moment-timezone';
-import { usePathname } from 'next/navigation';//이렇게 하는게 정녕 맞나??
+import { usePathname } from 'next/navigation';//이렇게 하는게 정녕 맞나?
 import ReactMarkdown from 'react-markdown';
 
 
@@ -13,7 +13,7 @@ const CalendarApp: React.FC = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const id = usePathname();
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedDay, setSelectedDay] = useState<string>();
   const calendarRef = useRef<HTMLDivElement>(null);
   const [calendarWidth, setCalendarWidth] = useState(0);
 
@@ -173,9 +173,10 @@ const CalendarApp: React.FC = () => {
       {isBottomSheetVisible && (
         <>
           <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsBottomSheetVisible(false)}></div>
-          <div style={{ width: `${calendarWidth}px` }} className="fixed bottom-0 mx-auto left-0 right-0 h-64 bg-white p-4 rounded-t-lg shadow-lg">
+          <div style={{ width: `${calendarWidth}px` }} className="fixed bottom-0 mx-auto left-0 right-0 h-64 bg-white p-4 rounded-t-lg shadow-lg overflow-auto">
             <button onClick={() => setIsBottomSheetVisible(false)}>Close</button>
-            <ReactMarkdown>{selectedDay}</ReactMarkdown>
+            <div className="prose prose-sm"><ReactMarkdown>{selectedDay}</ReactMarkdown></div>
+            {/* ref:https://stackoverflow.com/questions/75706164/problem-with-tailwind-css-when-using-the-react-markdown-component */}
           </div>
         </>
       )}
