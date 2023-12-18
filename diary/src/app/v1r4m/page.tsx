@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import moment from 'moment-timezone';
+import { usePathname } from 'next/navigation';;//이렇게 하는게 정녕 맞나??
 
 const CalendarApp: React.FC = () => {
   const [issues, setIssues] = useState<any[]>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const id = usePathname();
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleSwipeLeft(),
@@ -39,9 +41,9 @@ const CalendarApp: React.FC = () => {
   }
 
 
-  const githubIssueList = async () => {
+  const githubIssueList = async (id:String) => {
     try {
-      const response = await fetch('https://api.github.com/repos/v1r4m/diary/issues');
+      const response = await fetch(`https://api.github.com/repos${id}/diary/issues`);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -51,13 +53,13 @@ const CalendarApp: React.FC = () => {
 
 
   useEffect(() => {
-    githubIssueList();
-  }, []);
+    githubIssueList(id);
+  }, [id]);
 
   useEffect(() => {
     const fetchIssues = async () => {
       try {
-        const data = await githubIssueList();
+        const data = await githubIssueList(id);
         setIssues(data);
       } catch (error) {
         console.error('An error occurred while fetching issues', error);
@@ -65,7 +67,7 @@ const CalendarApp: React.FC = () => {
     };
 
     fetchIssues();
-  }, []);
+  }, [id]);
 
 
   const renderCalendar = () => {
@@ -139,7 +141,7 @@ const CalendarApp: React.FC = () => {
       <div className="h-3/5 overflow-auto">
         {renderCalendar()}
       </div>
-      <div className="h-1/10 grid grid-cols-2 gap-2">
+      <div className="h-1/10 grid grid-cols-2 max-w-s mx-auto gap-2">
         <button className="py-2 text-center" onClick={handleSwipeRight}>이전 달</button>
         <button className="py-2 text-center" onClick={handleSwipeLeft}>다음 달</button>
       </div>
