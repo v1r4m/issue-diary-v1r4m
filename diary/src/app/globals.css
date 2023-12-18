@@ -18,20 +18,17 @@
 
 body {
   display: 'flex';
-  flexDirection: 'column'; 
-  justifyContent: 'center'; 
-  alignItems: 'center';
   height: '100vh';
-  maxWidth: '375px';
+  max-width: '500px';
   margin: '0 auto';
   padding: '0 20px'; 
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
 }
 
 .calendar {

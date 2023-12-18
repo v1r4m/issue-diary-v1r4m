@@ -93,7 +93,7 @@ const CalendarApp: React.FC = () => {
       return day;
     });
     return (
-      <div style={{ maxWidth: '375px', margin: '0 auto', padding: '0 20px' }}>
+      <div style={{ maxWidth: '500px', margin: '0 auto', padding: '0 20px' }}>
         <div className="grid grid-cols-7 gap-1">
           {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
             <div style={{ textAlign: 'center', padding: '5px 0' }} key={index}>
@@ -101,7 +101,7 @@ const CalendarApp: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-1 text-center">
+        <div className="grid grid-cols-7 gap-2 text-center">
           {blanks.map((_, index) => (
             <div className="text-center py-1" key={`blank-${index}`}>
               <span></span>
@@ -109,7 +109,7 @@ const CalendarApp: React.FC = () => {
           ))}
           {days.map((day, index) => (
             <div
-              className="text-center py-1 text-center"
+              className="text-center py-1 flex flex-col items-center justify-center"
               key={index}
               onClick={() => handleDayClick(day)}
             >
@@ -123,7 +123,7 @@ const CalendarApp: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen max-w-xs mx-auto p-5">
+    <div className="flex flex-col h-screen max-w-s mx-auto p-5">
       <div className="flex items-center justify-center h-1/5 overflow-auto text-center">은진이의 일기 (로고가 들어갈 곳)</div>
       <div className="h-3/5 overflow-auto">
         {renderCalendar()}
