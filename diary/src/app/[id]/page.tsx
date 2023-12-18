@@ -2,7 +2,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import moment from 'moment-timezone';
-import { usePathname } from 'next/navigation';;//이렇게 하는게 정녕 맞나??
+import { usePathname } from 'next/navigation';//이렇게 하는게 정녕 맞나??
+import ReactMarkdown from 'react-markdown';
+
 
 //진 짜 개 못알아보겟으니까 100줄이상넘어가면 어케좀해라 코드꼬라지좀 이거 난독화인가요??? 
 
@@ -44,14 +46,9 @@ const CalendarApp: React.FC = () => {
   };
 
   const handleDayClick = (issue: any) => {
-    console.log(issue.body);
     setSelectedDay(issue.body);
     setIsBottomSheetVisible(true);
   }
-
-  useEffect(() => {
-    console.log(selectedDay);
-  }, [selectedDay]);
 
   const githubIssueList = async (id: String) => {
     try {
@@ -178,7 +175,7 @@ const CalendarApp: React.FC = () => {
           <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsBottomSheetVisible(false)}></div>
           <div style={{ width: `${calendarWidth}px` }} className="fixed bottom-0 mx-auto left-0 right-0 h-64 bg-white p-4 rounded-t-lg shadow-lg">
             <button onClick={() => setIsBottomSheetVisible(false)}>Close</button>
-            <p>{selectedDay}</p>
+            <ReactMarkdown>{selectedDay}</ReactMarkdown>
           </div>
         </>
       )}
