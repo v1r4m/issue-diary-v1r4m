@@ -1,8 +1,10 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import moment from 'moment-timezone';
 import { usePathname } from 'next/navigation';;//이렇게 하는게 정녕 맞나??
+
+//진 짜 개 못알아보겟으니까 100줄이상넘어가면 어케좀해라 코드꼬라지좀 이거 난독화인가요??? 
 
 const CalendarApp: React.FC = () => {
   const [issues, setIssues] = useState<any[]>([]);
@@ -10,6 +12,8 @@ const CalendarApp: React.FC = () => {
   const id = usePathname();
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
+  const calendarRef = useRef(null);
+  const [calendarWidth, setCalendarWidth] = useState(0);
 
 
   const handlers = useSwipeable({
@@ -39,13 +43,17 @@ const CalendarApp: React.FC = () => {
     return new Date(year, month, 1).getDay();
   };
 
-  const handleDayClick = (day: any) => {
-    setSelectedDay(day);
+  const handleDayClick = (issue: any) => {
+    console.log(issue.body);
+    setSelectedDay(issue.body);
     setIsBottomSheetVisible(true);
   }
 
+  useEffect(() => {
+    console.log(selectedDay);
+  }, [selectedDay]);
 
-  const githubIssueList = async (id:String) => {
+  const githubIssueList = async (id: String) => {
     try {
       const response = await fetch(`https://api.github.com/repos${id}/diary/issues`);
       const data = await response.json();
@@ -73,6 +81,12 @@ const CalendarApp: React.FC = () => {
     fetchIssues();
   }, [id]);
 
+  useEffect(() => {
+    if (calendarRef.current) {
+      setCalendarWidth(calendarRef.current.offsetWidth);
+    }
+  }, []);
+
 
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
@@ -87,32 +101,42 @@ const CalendarApp: React.FC = () => {
       issueMap.set(createdAt, issue);
     });
 
-    const days = Array.from({ length: daysInMonth}, (_, i) => {
+    const days = Array.from({ length: daysInMonth }, (_, i) => {
       const day = i + 1;
-      const date = moment.tz([year,month, day], 'Asia/Seoul').format('YYYY-MM-DD'); //잘 이해가 안되네 그냥 Y-M-D로 concat하면 안되나? 왜 여기서 tz이 필요하지? 
-      
+      const date = moment.tz([year, month, day], 'Asia/Seoul').format('YYYY-MM-DD'); //잘 이해가 안되네 그냥 Y-M-D로 concat하면 안되나? 왜 여기서 tz이 필요하지? 
+
       // Find the issue for the date from the map
       const issue = issueMap.get(date);
-      
-      return issue ? issue.title : <div style={{ 
-        width: '20px', 
-        height: '20px', 
-        borderRadius: '50%', 
-        backgroundColor: 'rgba(0, 0, 0, 0.1)', 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center' 
-      }}></div>;
-    });
-    const emoteDays = Array.from({ length: daysInMonth }, (_, i) => {
-      const day = i + 1;
-      return day;
+
+      return issue ? (
+        <div
+          className="text-center py-1 flex flex-col items-center justify-center"
+          onClick={() => handleDayClick(issue)}
+        >
+          <span>{issue.title}</span>
+          <div className="text-xs text-center">{day}</div>
+        </div>
+      ) : (
+        <div
+          className="text-center py-1 flex flex-col items-center justify-center"
+          onClick={() => handleDayClick('empty!')}
+        ><span style={{
+          width: '20px',
+          height: '20px',
+          borderRadius: '50%',
+          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}></span>
+          <div className="text-xs text-center">{day}</div>
+        </div>)
     });
     return (
-      <div style={{ maxWidth: '500px', margin: '0 auto', padding: '0 20px' }}>
+      <div style={{ maxWidth: '500px', margin: '0 auto', padding: '0 20px' }} ref={calendarRef}>
         <div className="grid grid-cols-7 gap-1">
           {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-            <div style={{ fontSize: '10px',textAlign: 'center', padding: '5px 0' }} key={index}>
+            <div style={{ fontSize: '10px', textAlign: 'center', padding: '5px 0' }} key={index}>
               <span>{day}</span>
             </div>
           ))}
@@ -126,12 +150,9 @@ const CalendarApp: React.FC = () => {
           ))}
           {days.map((day, index) => (
             <div
-              className="text-center py-1 flex flex-col items-center justify-center"
               key={index}
-              onClick={() => handleDayClick(day)}
             >
               <span>{day}</span>
-              <div className="text-xs text-center">{emoteDays[index]}</div>
             </div>
           ))}
         </div>
@@ -153,14 +174,14 @@ const CalendarApp: React.FC = () => {
         <p className="text-center">{currentMonth.toLocaleDateString()}</p>
       </div>
       {isBottomSheetVisible && (
-  <>
-    <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsBottomSheetVisible(false)}></div>
-    <div className="fixed bottom-0 left-0 right-0 h-64 bg-white p-4 rounded-t-lg shadow-lg">
-      <button onClick={() => setIsBottomSheetVisible(false)}>Close</button>
-      <p>Selected day: {selectedDay}</p>
-    </div>
-  </>
-)}
+        <>
+          <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsBottomSheetVisible(false)}></div>
+          <div style={{ width: `${calendarWidth}px` }} className="fixed bottom-0 mx-auto left-0 right-0 h-64 bg-white p-4 rounded-t-lg shadow-lg">
+            <button onClick={() => setIsBottomSheetVisible(false)}>Close</button>
+            <p>{selectedDay}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 };
