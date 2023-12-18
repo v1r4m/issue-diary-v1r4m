@@ -8,6 +8,9 @@ const CalendarApp: React.FC = () => {
   const [issues, setIssues] = useState<any[]>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const id = usePathname();
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+  const [selectedDay, setSelectedDay] = useState(null);
+
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleSwipeLeft(),
@@ -37,7 +40,8 @@ const CalendarApp: React.FC = () => {
   };
 
   const handleDayClick = (day: any) => {
-    alert(day);
+    setSelectedDay(day);
+    setIsBottomSheetVisible(true);
   }
 
 
@@ -148,6 +152,15 @@ const CalendarApp: React.FC = () => {
       <div className="h-1/10">
         <p className="text-center">{currentMonth.toLocaleDateString()}</p>
       </div>
+      {isBottomSheetVisible && (
+  <>
+    <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsBottomSheetVisible(false)}></div>
+    <div className="fixed bottom-0 left-0 right-0 h-64 bg-white p-4 rounded-t-lg shadow-lg">
+      <button onClick={() => setIsBottomSheetVisible(false)}>Close</button>
+      <p>Selected day: {selectedDay}</p>
+    </div>
+  </>
+)}
     </div>
   );
 };
