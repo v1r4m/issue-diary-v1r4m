@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
+import moment from 'moment-timezone';
 
 const CalendarApp: React.FC = () => {
   const [issues, setIssues] = useState<any[]>([]);
@@ -73,11 +74,21 @@ const CalendarApp: React.FC = () => {
     const daysInMonth = getDaysInMonth(year, month);
     const firstDay = getFirstDayOfMonth(year, month);
     const blanks = Array(firstDay).fill(null);
-    const days = Array.from({ length: daysInMonth }, (_, i) => {
+    // Create a map of issues by date
+    const issueMap = new Map();
+    issues.forEach(issue => {
+      const createdAt = moment(issue.created_at).tz('Asia/Seoul').format().split('T')[0];
+      issueMap.set(createdAt, issue);
+    });
+
+    const days = Array.from({ length: daysInMonth}, (_, i) => {
       const day = i + 1;
-      const date = new Date(year, month, day).toISOString().split('T')[0];
-      const issue = issues.find(issue => issue.created_at.startsWith(date));
-      return issue ? issue.title :   <div style={{ 
+      const date = moment.tz([year,month, day], 'Asia/Seoul').format('YYYY-MM-DD'); //잘 이해가 안되네 그냥 Y-M-D로 concat하면 안되나? 왜 여기서 tz이 필요하지? 
+      
+      // Find the issue for the date from the map
+      const issue = issueMap.get(date);
+      
+      return issue ? issue.title : <div style={{ 
         width: '20px', 
         height: '20px', 
         borderRadius: '50%', 
@@ -89,18 +100,18 @@ const CalendarApp: React.FC = () => {
     });
     const emoteDays = Array.from({ length: daysInMonth }, (_, i) => {
       const day = i + 1;
-      const date = new Date(year, month, day).toISOString().split('T')[0];
       return day;
     });
     return (
       <div style={{ maxWidth: '500px', margin: '0 auto', padding: '0 20px' }}>
         <div className="grid grid-cols-7 gap-1">
-          {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
-            <div style={{ textAlign: 'center', padding: '5px 0' }} key={index}>
+          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+            <div style={{ fontSize: '10px',textAlign: 'center', padding: '5px 0' }} key={index}>
               <span>{day}</span>
             </div>
           ))}
         </div>
+        <br />
         <div className="grid grid-cols-7 gap-2 text-center">
           {blanks.map((_, index) => (
             <div className="text-center py-1" key={`blank-${index}`}>
