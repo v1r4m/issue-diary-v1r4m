@@ -4,6 +4,12 @@
 - 왜 굳이 이슈로 쓰냐면... 그게 '멋지니까'
 - react minified error 는 천천히.. 핸들링하기 
 
+## Quick Start
+- create a repository name of `issue-diary-yourgithubuserid`
+- so my example will be `issue-diary-v1r4m`, and the url is https://github.com/yourgithubuserid/issue-diary-yourgithubuserid
+- On issue, write your first diary. The title of the issue must be one-character emoji.
+- go to https://diary-two.vercel.app/yourgithubuserid and your diary will be ready right away.
+
 ## 생각해 볼 점
 - 지난 날의 일기를 어떻게 쓸 수 있게 만들 것인가? 
     - 사실 생각해보면 깃헙 이슈연동은 순전히 내 욕심이자 부가기능이므로 깃험에서는 지난 날의 일기를 쓰지 않는다고 가정하는게 제일 맞는 것 같다. 

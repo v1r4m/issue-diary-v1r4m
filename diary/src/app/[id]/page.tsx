@@ -54,7 +54,8 @@ const CalendarApp: React.FC = () => {
 
   const githubIssueList = async (id: String) => {
     try {
-      const response = await fetch(`https://api.github.com/repos${id}/diary/issues`);
+      const github = id.substring(1);
+      const response = await fetch(`https://api.github.com/repos/${github}/issue-diary-${github}/issues`);
       const data = await response.json();
       return data;
     } catch (error) {
