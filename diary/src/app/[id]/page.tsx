@@ -17,12 +17,12 @@ const CalendarApp: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string>();
   const calendarRef = useRef<HTMLDivElement>(null);
   const [calendarWidth, setCalendarWidth] = useState(0);
-  const [vh, setVh] = useState(0);
-  useEffect(() => {
-    setVh(window.innerHeight * 0.01);
-  }, []);
-  const topConstraint = 5 * vh;
-  const bottomConstraint = 50 * vh;
+  // const [vh, setVh] = useState(0);
+  // useEffect(() => {
+  //   setVh(window.innerHeight * 0.01);
+  // }, []);
+  // const topConstraint = 5 * vh;
+  // const bottomConstraint = 50 * vh;
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleSwipeLeft(),
@@ -98,7 +98,6 @@ const CalendarApp: React.FC = () => {
     return text.replace(imgTagRegex, (match: string, alt: string, src: string) => `![image](${src})`);
   }
 
-
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
@@ -143,6 +142,7 @@ const CalendarApp: React.FC = () => {
           <div className="text-xs text-center">{day}</div>
         </div>)
     });
+
     return (
       <div style={{ maxWidth: '500px', margin: '0 auto', padding: '0 20px' }} ref={calendarRef}>
         <div className="grid grid-cols-7 gap-1">
@@ -187,26 +187,29 @@ const CalendarApp: React.FC = () => {
         {renderCalendar()}
       </div>
       <div className="h-1/10 grid grid-cols-2 max-w-s mx-auto gap-2">
-        <button className="py-2 text-center" onClick={handleSwipeRight}>이전 달</button>
-        <button className="py-2 text-center" onClick={handleSwipeLeft}>다음 달</button>
+        <button className="py-2 text-center" onClick={handleSwipeRight}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" dataSlot="icon" className="w-6 h-6">
+  <path fillRule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clipRule="evenodd" />
+</svg>
+</button>
+        <button className="py-2 text-center" onClick={handleSwipeLeft}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" dataSlot="icon" className="w-6 h-6">
+  <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clipRule="evenodd" />
+</svg>
+</button>
       </div>
       <div className="h-1/10">
-        <p className="text-center">{currentMonth.toLocaleDateString()}</p>
+        <p className="text-center">{currentMonth.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</p>
       </div>
       {isBottomSheetVisible && (
         <>
           <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsBottomSheetVisible(false)}></div>
-          <motion.div
-            drag="y"
-            dragConstraints={{ top: topConstraint, bottom: bottomConstraint }}
-            dragElastic={0.05}
+          <div
             className="fixed mx-auto bottom-0 left-0 right-0 bg-white p-4 rounded-t-lg shadow-lg overflow-auto"
-            style={{ width: `${calendarWidth}px`, height: `80vh`, transform: 'translateY(50%)' }}
+            style={{ width: `${calendarWidth}px`, height: `80vh` }}
           >
             <button onClick={() => setIsBottomSheetVisible(false)}>Close</button>
             <div className="prose prose-sm"><ReactMarkdown>{selectedDay}</ReactMarkdown></div>
             {/* ref:https://stackoverflow.com/questions/75706164/problem-with-tailwind-css-when-using-the-react-markdown-component */}
-          </motion.div>
+          </div>
         </>
       )}
     </div>
