@@ -16,7 +16,10 @@ const CalendarApp: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string>();
   const calendarRef = useRef<HTMLDivElement>(null);
   const [calendarWidth, setCalendarWidth] = useState(0);
-  const vh = window.innerHeight * 0.01;
+  const [vh, setVh] = useState(0);
+  useEffect(() => {
+    setVh(window.innerHeight * 0.01);
+  }, []);
   const topConstraint = 5 * vh;
   const bottomConstraint = 50 * vh;
 
@@ -48,7 +51,9 @@ const CalendarApp: React.FC = () => {
   };
 
   const handleDayClick = (issue: any) => {
-    setSelectedDay(issue.body);
+    const markdownWithImages = convertImgTagsToMarkdown(issue.body);
+    setSelectedDay(markdownWithImages);
+    console.log(markdownWithImages);
     setIsBottomSheetVisible(true);
   }
 
@@ -85,6 +90,11 @@ const CalendarApp: React.FC = () => {
       setCalendarWidth(calendarRef.current.offsetWidth);
     }
   }, []);
+
+  function convertImgTagsToMarkdown(text) {
+    const imgTagRegex = /<img.*?alt="([^"]*)".*?src="([^"]*)".*?>/g;
+    return text.replace(imgTagRegex, (match, alt, src) => `![image](${src})`);
+  }
 
 
   const renderCalendar = () => {
@@ -191,5 +201,13 @@ const CalendarApp: React.FC = () => {
     </div>
   );
 };
+
+//마크다운 이미지를 보여줄 때에는 두 가지 방법이 있는데
+///reactmarkdown에서 allowdangerousehtml을 참으로 놓거나, 직접 파싱해주면 된다
+//그런데 allowdangerousehtml을 허용하면 XSS 스크립팅 공격에 취약해질수있다. 
+//그래서 <img>를 직접 파싱해서 ![image]로 바꿔준다.
+//하지만 깃헙도 <img>를 쓰는 이유가 있었으니 ![image]는 이미지 너비를 설정할 수 없다.
+//그래서 둘 다를 해결하려면 (1)reactmarkdown 내부를 파고들거나 아니면 (2)마크다운파서를 새로 만들거나 (3)그냥 XSS스크립팅을 허용해주거나 (4)그냥 이미지 너비 설정하지 말던가 해야한다. 
+//나는 4번을 골랐다. ㅎ
 
 export default CalendarApp;
