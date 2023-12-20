@@ -5,6 +5,7 @@ import moment from 'moment-timezone';
 import { usePathname } from 'next/navigation';//이렇게 하는게 정녕 맞나?
 import ReactMarkdown from 'react-markdown';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 //진 짜 개 못알아보겟으니까 100줄이상넘어가면 어케좀해라 코드꼬라지좀 이거 난독화인가요??? 
 
@@ -172,7 +173,16 @@ const CalendarApp: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen max-w-s mx-auto p-5">
-      <div className="flex items-center justify-center h-1/5 overflow-auto text-center">은진이의 일기 (로고가 들어갈 곳)</div>
+      <div className="flex items-center justify-center h-1/5 overflow-auto text-center">
+        <Image
+                src="/issue-black.png"
+                alt="black issue logo"
+                className="dark:invert"
+                width={100}
+                height={24}
+                priority
+              />
+      </div>
       <div className="h-3/5 overflow-auto">
         {renderCalendar()}
       </div>
