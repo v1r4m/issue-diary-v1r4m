@@ -92,9 +92,9 @@ const CalendarApp: React.FC = () => {
     }
   }, []);
 
-  function convertImgTagsToMarkdown(text) {
+  function convertImgTagsToMarkdown(text: string) {
     const imgTagRegex = /<img.*?alt="([^"]*)".*?src="([^"]*)".*?>/g;
-    return text.replace(imgTagRegex, (match, alt, src) => `![image](${src})`);
+    return text.replace(imgTagRegex, (match: string, alt: string, src: string) => `![image](${src})`);
   }
 
 
