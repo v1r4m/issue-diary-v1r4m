@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="https://github.com/v1r4m/issue-diary-v1r4m/assets/26866063/b12a9ada-d028-4097-a4ef-97ff2d32642f" width="30%" height="30%" />
+</p>
+
 # diary
 - DEMO!!!!!! https://diary-virams-projects.vercel.app/v1r4m
 - 이슈를 쓰면 예쁘게 다이어리로 퍼블리싱해주는 일기장
