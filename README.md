@@ -19,7 +19,7 @@
 - https://github.com/particp/issue-diary-particp
 
 ## start of your own
-![Static Badge](https://img.shields.io/badge/npm-v20-blue)
+![Static Badge](https://img.shields.io/badge/node-v20-blue)
 ```
 nvm use 20
 npm install
