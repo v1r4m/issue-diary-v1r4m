@@ -7,8 +7,8 @@
 - Write an Issue, and it will be published as a diary.
 
 ## Quick Start
-- create a repository name of `issue-diary-yourgithubuserid`
-- so my example will be `issue-diary-v1r4m`, and the url is https://github.com/yourgithubuserid/issue-diary-yourgithubuserid
+- create a repository name of `issue-diary-yourgithubuserid`, and the url will be https://github.com/yourgithubuserid/issue-diary-yourgithubuserid
+- so my example will be `issue-diary-v1r4m`. 
 - On issue, write your first diary. The title of the issue must be one-character emoji.
 - go to https://diary-two.vercel.app/yourgithubuserid and your diary will be ready right away.
 
@@ -17,6 +17,14 @@
 - https://github.com/eunjinkosilver/issue-diary-eunjinkosilver
 - https://diary-two.vercel.app/particp
 - https://github.com/particp/issue-diary-particp
+
+## start of your own
+![Static Badge](https://img.shields.io/badge/node-v20-blue)
+```
+nvm use 20
+npm install
+npm run dev
+```
 
 ## [DevLog]handling errors
 - Minified React Error 
