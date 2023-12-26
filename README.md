@@ -18,8 +18,13 @@
 - https://diary-two.vercel.app/particp
 - https://github.com/particp/issue-diary-particp
 
+## [DevLog]handling errors
+- Minified React Error 
+    - https://jaehan.blog/nextjs/Hydration-Error-:-Minified-React-Error-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0
+
 ## 우선순위
 - [x] 모두가 쓸 수 있게 만들기 + 배포(홈 디렉터리에 리드미 연동)
+- [ ] api fetching 시 paging 하기
 - [ ] 캘린더 월요일 시작 / 일요일 시작 토글 기능 만들기
 - [ ] timezone을 직접 지정할 수 있도록 만들기
 - [ ] diary to issue 쌍방 업데이트 가능하게 만들기
