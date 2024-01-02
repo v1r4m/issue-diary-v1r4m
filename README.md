@@ -15,8 +15,6 @@
 ## examples
 - https://diary-two.vercel.app/eunjinkosilver
 - https://github.com/eunjinkosilver/issue-diary-eunjinkosilver
-- https://diary-two.vercel.app/particp
-- https://github.com/particp/issue-diary-particp
 
 ## start of your own
 ![Static Badge](https://img.shields.io/badge/node-v20-blue)

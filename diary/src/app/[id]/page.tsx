@@ -1,4 +1,5 @@
 'use client';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import React, { useRef, useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import moment from 'moment-timezone';
@@ -9,8 +10,13 @@ import Image from 'next/image';
 
 //진 짜 개 못알아보겟으니까 100줄이상넘어가면 어케좀해라 코드꼬라지좀 이거 난독화인가요??? 
 
-const CalendarApp: React.FC = () => {
+import { DayProps } from '../util/day'; // Import the 'DayProps' type from the correct location
+
+const CalendarApp: React.FC<DayProps> = (props) => { // Use the 'DayProps' type as the type for the 'props' parameter
   const [issues, setIssues] = useState<any[]>([]);
+  //////
+  // const [currentMonth, setCurrentMonth] = useState(new Date(props.year, props.month - 1, props.date));
+  //////
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const id = usePathname();
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
@@ -23,6 +29,8 @@ const CalendarApp: React.FC = () => {
   // }, []);
   // const topConstraint = 5 * vh;
   // const bottomConstraint = 50 * vh;
+
+  
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleSwipeLeft(),
@@ -225,3 +233,4 @@ const CalendarApp: React.FC = () => {
 //나는 4번을 골랐다. ㅎ
 
 export default CalendarApp;
+
