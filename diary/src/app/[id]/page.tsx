@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 import { DayProps } from '../util/day'; // Import the 'DayProps' type from the correct location
 
-const CalendarApp: React.FC<DayProps> = (props) => { // Use the 'DayProps' type as the type for the 'props' parameter
+const CalendarApp: React.FC = (props) => { // Use the 'DayProps' type as the type for the 'props' parameter
   const [issues, setIssues] = useState<any[]>([]);
   //////
   // const [currentMonth, setCurrentMonth] = useState(new Date(props.year, props.month - 1, props.date));
